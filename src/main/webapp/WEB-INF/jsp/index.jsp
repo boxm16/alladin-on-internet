@@ -12,7 +12,7 @@
         <title>index jsp</title>
     </head>
     <body>
-        <h1>index jsp bbuu</h1>
+        <h1>welcom to alladin</h1>
 
         <h1>Heroku try </h1>
         <a href="http://www.google.com">link text</a>
