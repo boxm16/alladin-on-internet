@@ -17,6 +17,7 @@
         <h1>Heroku try </h1>
         <a href="http://www.google.com">link text</a>
 
-        <a href="https://chiatura.herokuapp.com">HEROKU LINK</a>
+        <a href="https://chiatura.herokuapp.com">HEROKU LINK</a><br>
+        <a href="${pageContext.request.contextPath}/go.htm">HEROKU LINK</a>
     </body>
 </html>
