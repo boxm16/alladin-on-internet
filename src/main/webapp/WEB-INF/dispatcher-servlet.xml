@@ -59,5 +59,20 @@
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
  
-    <tx:annotation-driven/>    
+    <tx:annotation-driven/>   
+    
+    
+    <!--  For reading properties files// no idea fot its purpose or what to do with it
+    <context:property-placeholder location="classpath:config/db.properties" />
+     --> 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+        <property name="dataSource" ref="dataSource"></property>  
+    </bean>   
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value = "com.mysql.cj.jdbc.Driver" />
+        <property name="url" value = "jdbc:mysql://remotemysql.com/2cMB8HiJvS?useSSL=false" />
+        <property name="username" value = "2cMB8HiJvS" />
+        <property name="password" value = "rcYF70B1fj" />
+        <property name="initialSize" value = "5" />
+    </bean> 
 </beans>

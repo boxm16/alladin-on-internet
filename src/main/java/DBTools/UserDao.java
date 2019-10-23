@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,16 +22,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDao {
 
-    public void insert() {
-        String query = "INSERT INTO user (username) VALUES('BUBU');";
-        try (Connection connection = DataBaseConnection.getInitConnection()) {
-            Statement statement = connection.createStatement();
-            statement.execute(query);
-            statement.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-        }
+    public void insert() {
+
+        jdbcTemplate.update("INSERT INTO user (username) VALUES(?)", "BEBE");
 
     }
 
