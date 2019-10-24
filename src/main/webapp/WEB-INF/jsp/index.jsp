@@ -1,23 +1,54 @@
 <%-- 
-    Document   : index
-    Created on : Oct 23, 2019, 12:58:49 AM
-    Author     : Michail Sitmalidis
+    Document   : CustomerAuthorization
+    Created on : Apr 7, 2019, 5:15:23 AM
+    Author     : boxm1
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>index jsp</title>
+        <title>ALLADIN</title>
     </head>
     <body>
-        <h1>welcom to alladin</h1>
+        <p><h1>ALLADIN</h1></p>
+    <br>
+    <hr>
 
-        <h1>Heroku try </h1>
-        <a href="http://www.google.com">link text</a>
+    <form autocomplete="on" class="login-form" action="${pageContext.request.contextPath}/loginFormHandling.htm" method="POST">
 
-        <a href="https://chiatura.herokuapp.com">HEROKU LINK</a><br>
-        <a href="${pageContext.request.contextPath}/go.htm">HEROKU LINK</a>
-    </body>
+        <div class="col-md-4 login-sec">
+            <h2 class="text-center">Login Now</h2>
+            <div class="form-group">
+                <label for="inputEmail" class="text-uppercase">Username</label>
+                <input class="form-control" id="username" name="email" required="required" type="text" placeholder="e-mail:myemail@mail.com"/>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="text-uppercase">Password</label>
+                <input class="form-control" id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/> 
+            </div>
+            <div class="error-message">${message}</div>
+            <div class="form-check">
+
+
+                <button type="submit" id="submit" class="btn btn-login float-right" style="background-color: #0c00ff">Submit</button>
+            </div>
+            <div>
+                <p class="change_link">
+                    Δεν έχεις λογαριασμό ?
+                    <a href="${pageContext.request.contextPath}/goToRegisterForm.htm">Φτιάξε το</a>
+                </p>
+            </div>
+        </div>
+
+
+    </div>   
+
+</div>   
+</form>
+</body>
 </html>

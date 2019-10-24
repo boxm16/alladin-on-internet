@@ -6,8 +6,10 @@
 package Controllers;
 
 import DBTools.UserDao;
+import Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,8 +27,14 @@ public class UserController {
 
     public String saveCustomerRating() {
         userDao.insert();
-        return "registration";
-
+        return "register";
     }
 
+    @RequestMapping(value = "/goToRegisterForm", method = RequestMethod.GET)
+
+    public String registerUser(ModelMap model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "register";
+    }
 }

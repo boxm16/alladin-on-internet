@@ -63,8 +63,8 @@
     
     
     <!--  For reading properties files// no idea fot its purpose or what to do with it
-    <context:property-placeholder location="classpath:config/db.properties" />
-     --> 
+   <context:property-placeholder location="classpath:config/db.properties" />
+    --> 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
         <property name="dataSource" ref="dataSource"></property>  
     </bean>   
@@ -74,5 +74,6 @@
         <property name="username" value = "2cMB8HiJvS" />
         <property name="password" value = "rcYF70B1fj" />
         <property name="initialSize" value = "5" />
+       
     </bean> 
 </beans>
