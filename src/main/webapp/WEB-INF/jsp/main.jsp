@@ -1,6 +1,6 @@
 <%-- 
-    Document   : registration
-    Created on : Oct 23, 2019, 3:18:04 AM
+    Document   : main
+    Created on : Oct 26, 2019, 9:46:52 PM
     Author     : Michail Sitmalidis
 --%>
 
@@ -13,7 +13,5 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-         
-        
     </body>
 </html>

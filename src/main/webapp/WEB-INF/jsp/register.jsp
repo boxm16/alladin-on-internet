@@ -10,8 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-         <link href="<c:url value="/resources/newcss2.css" />" rel="stylesheet">
-
+        
         <title>Registration</title>
     </head>
     <body>
@@ -29,18 +28,7 @@
                                     <spring:errors path="email" cssClass="error error-message"/>
 
                                 </div>  
-                                <div class="form-group">
-                                    <spring:label path="firstName" cssClass="text-uppercase">ΟΝΟΜΑ</spring:label>
-                                    <spring:input  cssClass="form-control" path="firstName"/> 
-                                    <spring:errors path="firstName" cssClass="error error-message"/>
-
-                                </div>  
-                                <div class="form-group">
-                                    <spring:label path="lastName" cssClass="text-uppercase">ΕΠΙΘΕΤΟ</spring:label>
-                                    <spring:input  cssClass="form-control" path="lastName"/> 
-                                    <spring:errors path="lastName" cssClass="error error-message"/>
-
-                                </div>  
+                             
                                 <div class="form-group">
                                     <spring:label path="password" cssClass="text-uppercase">PASSWORD</spring:label>
                                     <spring:password  cssClass="form-control" path="password"/> 

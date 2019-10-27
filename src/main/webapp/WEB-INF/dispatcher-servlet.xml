@@ -60,7 +60,12 @@
           p:viewName="index" />
  
     <tx:annotation-driven/>   
-    
+    <!-- for error messages-->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="/WEB-INF/message_en" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
     
     <!--  For reading properties files// no idea fot its purpose or what to do with it
    <context:property-placeholder location="classpath:config/db.properties" />

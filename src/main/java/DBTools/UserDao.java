@@ -5,6 +5,7 @@
  */
 package DBTools;
 
+import Models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,6 +30,19 @@ public class UserDao {
 
         jdbcTemplate.update("INSERT INTO user (username) VALUES(?)", "BEBE");
 
+    }
+
+    public boolean userExists(String email) {
+        String sql = "SELECT count(*) FROM user WHERE email = ?";
+
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{email}, Integer.class);
+        return count > 0;
+
+    }
+
+    public void registerUser(User user) {
+        String sql = "INSERT INTO user(email, password) VALUES(?,?)";
+        jdbcTemplate.update(sql, user.getEmail(),user.getPassword());
     }
 
 }
