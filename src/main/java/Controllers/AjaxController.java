@@ -9,6 +9,7 @@ import DBTools.AddressDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import javax.servlet.ServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,7 @@ public class AjaxController {
     String getPostalCodes(@RequestParam(value = "district") String district) throws JsonProcessingException {
 
         List<String> postalCodes = addressDao.getPostalCodes(district);
-   
+
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(postalCodes);
 
@@ -39,7 +40,8 @@ public class AjaxController {
 
     @RequestMapping(value = "/getStreets.htm", method = RequestMethod.GET, headers = "Accept=*/*", produces = "application/json;charset=UTF-8")
     public @ResponseBody
-    String getStreets(@RequestParam(value = "postalCode") int postalCode) throws JsonProcessingException {
+    String getStreets(ServletResponse response, @RequestParam(value = "postalCode") int postalCode) throws JsonProcessingException {
+        response.setCharacterEncoding("UTF-8");
 
         List<String> streets = addressDao.getPostalCodes(postalCode);
         System.out.println("δδσασδ");

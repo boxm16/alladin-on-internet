@@ -30,6 +30,9 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        // Set the default response content type and encoding
+        servletResponse.setContentType("text/html; charset=UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
