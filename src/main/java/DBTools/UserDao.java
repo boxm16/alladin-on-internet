@@ -26,11 +26,6 @@ public class UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void insert() {
-
-        jdbcTemplate.update("INSERT INTO user (username) VALUES(?)", "BEBE");
-
-    }
 
     public boolean userExists(String email) {
         String sql = "SELECT count(*) FROM user WHERE email = ?";

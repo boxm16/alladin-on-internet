@@ -5,9 +5,11 @@
  */
 package Controllers;
 
+import DBTools.AddressDao;
 import DBTools.UserDao;
 import Models.User;
 import Validation.UserValidator;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,12 +30,15 @@ public class UserController {
     private UserDao userDao;
 
     @Autowired
+    private AddressDao addressDao;
+
+    @Autowired
     private UserValidator userValidator;
 
     @RequestMapping(value = "/go", method = RequestMethod.GET)
 
     public String saveCustomerRating() {
-        userDao.insert();
+    
         return "register";
     }
 
@@ -52,6 +57,8 @@ public class UserController {
         } else {
 
             userDao.registerUser(user);
+            ArrayList<String> districts = addressDao.getDistricts();
+            model.addAttribute("districts", districts);
             model.addAttribute("user", user);
             session.setAttribute("user", user);
             return "userData";
