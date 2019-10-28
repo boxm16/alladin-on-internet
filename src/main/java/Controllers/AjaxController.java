@@ -31,7 +31,7 @@ public class AjaxController {
     String getPostalCodes(@RequestParam(value = "district") String district) throws JsonProcessingException {
 
         List<String> postalCodes = addressDao.getPostalCodes(district);
-        System.out.println(postalCodes);
+   
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(postalCodes);
 
@@ -42,6 +42,7 @@ public class AjaxController {
     String getStreets(@RequestParam(value = "postalCode") int postalCode) throws JsonProcessingException {
 
         List<String> streets = addressDao.getPostalCodes(postalCode);
+        System.out.println(streets);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(streets);
 
