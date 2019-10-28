@@ -124,6 +124,7 @@
                 $.ajax({url: 'getStreets.htm?postalCode=' + selectedPostalCode, contentType: 'application/json; charset=UTF-8',
 
                     success: function (result) {
+                        alert(result);
                         var jsonObj = $.parseJSON(result);
                         var streets = $('#street');
                         streets.empty();
