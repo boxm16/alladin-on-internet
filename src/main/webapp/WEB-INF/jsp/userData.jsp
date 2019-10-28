@@ -55,7 +55,7 @@
                             </div>  
                             <div class="form-group">
                                 <spring:label path="district" cssClass="text-uppercase">ΠΕΡΙΟΧΗ</spring:label>
-                                <spring:select path="district" cssClass="form-control" id="district" onchange="myFunc()">
+                                <spring:select path="district" cssClass="form-control" id="district" onchange="getPostalCodes()">
                                     <spring:option value="NONE" label="--- Select ---"/>
                                     <spring:options items="${districts}" />
                                 </spring:select>
@@ -64,11 +64,17 @@
 
                             <div class="form-group">
                                 <spring:label path="postalCode" cssClass="text-uppercase">ΤΑΧΥΔΡΟΜΙΚΟΣ ΚΩΔΙΚΑΣ</spring:label>
-                                <spring:select path="postalCode" cssClass="form-control">
+                                <spring:select path="postalCode" cssClass="form-control" id="postalCode" onchange="getStreets()">
                                     <spring:option value="NONE" label="--- Select ---"/>
-
                                 </spring:select>
                                 <spring:errors path="postalCode" cssClass="error error-message"/>
+                            </div> 
+                            <div class="form-group">
+                                <spring:label path="street" cssClass="text-uppercase">ΟΔΟΣ</spring:label>
+                                <spring:select path="street" cssClass="form-control">
+                                    <spring:option value="NONE" label="--- Select ---"/>
+                                </spring:select>
+                                <spring:errors path="street" cssClass="error error-message"/>
                             </div> 
 
                             <button type="submit" id="submit" class="btn btn-login float-right" style="background-color: #0c00ff">Submit</button>
@@ -88,9 +94,9 @@
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script>
 
-            function myFunc() {
+            function getPostalCodes() {
                 var selectedDistrict = $("#district").val();
-         
+
                 $.ajax({url: 'getPostalCodes.htm?district=' + selectedDistrict, contentType: 'application/json; charset=UTF-8',
 
                     success: function (result) {
@@ -99,7 +105,31 @@
                         postalCode.empty();
                         $.each(jsonObj, function (i, item) {
                             postalCode.append(
-                                 $('<option>').text(item)
+                                    $('<option>').text(item)
+                                    );
+                        });
+
+                    },
+
+                    error: function (data) {
+                        alert(data);
+                    }
+
+                });
+            }
+            
+            function getStreets() {
+                var selectedPostalCode = $("#postalCode").val();
+
+                $.ajax({url: 'getStreets.htm?postalCode=' + selectedPostalCode, contentType: 'application/json; charset=UTF-8',
+
+                    success: function (result) {
+                        var jsonObj = $.parseJSON(result);
+                        var streets = $('#street');
+                        streets.empty();
+                        $.each(jsonObj, function (i, item) {
+                            streets.append(
+                                    $('<option>').text(item)
                                     );
                         });
 

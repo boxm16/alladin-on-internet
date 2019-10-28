@@ -28,12 +28,22 @@ public class AjaxController {
 
     @RequestMapping(value = "/getPostalCodes.htm", method = RequestMethod.GET, headers = "Accept=*/*", produces = "application/json")
     public @ResponseBody
-    String findAvaliablePlayersForThisGame(@RequestParam(value = "district") String district) throws JsonProcessingException {
+    String getPostalCodes(@RequestParam(value = "district") String district) throws JsonProcessingException {
 
         List<String> postalCodes = addressDao.getPostalCodes(district);
         System.out.println(postalCodes);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(postalCodes);
+
+    }
+
+    @RequestMapping(value = "/getStreets.htm", method = RequestMethod.GET, headers = "Accept=*/*", produces = "application/json;charset=UTF-8")
+    public @ResponseBody
+    String getStreets(@RequestParam(value = "postalCode") int postalCode) throws JsonProcessingException {
+
+        List<String> streets = addressDao.getPostalCodes(postalCode);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(streets);
 
     }
 }
