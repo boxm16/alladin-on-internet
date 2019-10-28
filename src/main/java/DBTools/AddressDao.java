@@ -30,11 +30,11 @@ public class AddressDao {
     }
 
     public List<String> getPostalCodes(String district) {
-        System.out.println(district);
-        String sql = "SELECT postal_code FROM post_box WHERE district=" + district + " GROUP BY postal_code ORDER BY postal_code ASC;";
-        ArrayList<String> postal_codes;
-
-        return postal_codes = (ArrayList<String>) jdbcTemplate.queryForList(sql, String.class);
+  
+        String sql = "SELECT postal_code FROM post_box WHERE district='" + district + "' GROUP BY postal_code ORDER BY postal_code ASC;";
+       
+    
+        return  jdbcTemplate.queryForList(sql, String.class);
     }
 
 }

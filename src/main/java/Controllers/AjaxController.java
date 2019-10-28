@@ -31,7 +31,7 @@ public class AjaxController {
     String findAvaliablePlayersForThisGame(@RequestParam(value = "district") String district) throws JsonProcessingException {
 
         List<String> postalCodes = addressDao.getPostalCodes(district);
-        System.out.println(district);
+        System.out.println(postalCodes);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(postalCodes);
 

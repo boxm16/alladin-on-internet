@@ -66,7 +66,7 @@
                                 <spring:label path="postalCode" cssClass="text-uppercase">ΤΑΧΥΔΡΟΜΙΚΟΣ ΚΩΔΙΚΑΣ</spring:label>
                                 <spring:select path="postalCode" cssClass="form-control">
                                     <spring:option value="NONE" label="--- Select ---"/>
-                                    <spring:options items="${jj}" />
+
                                 </spring:select>
                                 <spring:errors path="postalCode" cssClass="error error-message"/>
                             </div> 
@@ -90,26 +90,25 @@
 
             function myFunc() {
                 var selectedDistrict = $("#district").val();
-                alert(selectedDistrict);
+         
                 $.ajax({url: 'getPostalCodes.htm?district=' + selectedDistrict, contentType: 'application/json; charset=UTF-8',
-                    success: function (result1) {
-                        var jsonobj1 = $.parseJSON(result1);
 
-                        //  $('table').text("SELECT AVAILABLE PLAYERS FOR YOUR GAME").appendTo('#output1');
-
-
-                        $(function () {
-                            $.each(jsonobj1, function (i, item) {
-                                $('<tr>').append(
-                                        $('<td>').text(item.username),
-                                        $('<td>').text(item.teamwork),
-                                        $('<td>').text(item.athletism),
-                                        $('<td>').text(item.technique),
-                                        $('<td>').append('<a href="${pageContext.request.contextPath}/handleGameRequests.htm?user_to_be_invited=' + item.player + '&game=' + courtReservationId + '">' + "Send Request" + '</a>')).appendTo('#output1');
-                            });
-
+                    success: function (result) {
+                        var jsonObj = $.parseJSON(result);
+                        var postalCode = $('#postalCode');
+                        postalCode.empty();
+                        $.each(jsonObj, function (i, item) {
+                            postalCode.append(
+                                 $('<option>').text(item)
+                                    );
                         });
+
+                    },
+
+                    error: function (data) {
+                        alert(data);
                     }
+
                 });
             }
         </script>

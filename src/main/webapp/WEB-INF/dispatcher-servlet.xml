@@ -78,7 +78,7 @@
         <property name="url" value = "jdbc:mysql://remotemysql.com/2cMB8HiJvS?useSSL=false" />
         <property name="username" value = "2cMB8HiJvS" />
         <property name="password" value = "rcYF70B1fj" />
-        <property name="initialSize" value = "5" />
+        <property name="initialSize" value = "2" />
        
     </bean> 
 </beans>
