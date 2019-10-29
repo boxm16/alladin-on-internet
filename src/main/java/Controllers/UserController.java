@@ -38,7 +38,7 @@ public class UserController {
     @RequestMapping(value = "/go", method = RequestMethod.GET)
 
     public String saveCustomerRating() {
-    
+
         return "register";
     }
 
@@ -58,6 +58,7 @@ public class UserController {
 
             userDao.registerUser(user);
             ArrayList<String> districts = addressDao.getDistricts();
+         
             model.addAttribute("districts", districts);
             model.addAttribute("user", user);
             session.setAttribute("user", user);

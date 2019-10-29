@@ -24,7 +24,7 @@ public class AddressDao {
     public ArrayList<String> getDistricts() {
         String sql = "SELECT district FROM post_box GROUP BY district ORDER BY district ASC;";
         ArrayList<String> districts;
-
+      
         return districts = (ArrayList<String>) jdbcTemplate.queryForList(sql, String.class);
 
     }

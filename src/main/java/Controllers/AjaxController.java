@@ -38,10 +38,10 @@ public class AjaxController {
 
     }
 
-    @RequestMapping(value = "/getStreets.htm", method = RequestMethod.GET, headers = "Accept=*/*", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/getStreets.htm", method = RequestMethod.GET, headers = "Accept=*/*", produces = "application/json; charset=utf-8")
     public @ResponseBody
     String getStreets(ServletResponse response, @RequestParam(value = "postalCode") int postalCode) throws JsonProcessingException {
-        response.setCharacterEncoding("UTF-8");
+      
 
         List<String> streets = addressDao.getPostalCodes(postalCode);
         System.out.println("δδσασδ");
