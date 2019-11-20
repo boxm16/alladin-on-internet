@@ -58,11 +58,33 @@ public class UserController {
 
             userDao.registerUser(user);
             ArrayList<String> districts = addressDao.getDistricts();
-         
+
             model.addAttribute("districts", districts);
             model.addAttribute("user", user);
             session.setAttribute("user", user);
             return "userData";
         }
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+
+    public String customerMainPage(HttpSession session) {
+        User user = new User();
+        session.setAttribute("user", user);
+        return "customerMainPage";
+    }
+
+    @RequestMapping(value = "/map", method = RequestMethod.GET)
+
+    public String map() {
+
+        return "map";
+    }
+
+    @RequestMapping(value = "/map2", method = RequestMethod.GET)
+
+    public String map2() {
+
+        return "map2";
     }
 }

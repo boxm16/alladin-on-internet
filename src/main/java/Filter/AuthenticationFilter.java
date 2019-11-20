@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         String loginURI = request.getContextPath() + "/index.htm";
-        String logingURI = request.getContextPath() + "/loginFormHandling.htm";
+        String logingURI = request.getContextPath() + "/login.htm";
         String registerURI = request.getContextPath() + "/goToRegisterForm.htm";
         String registerFormHandlingURI = request.getContextPath() + "/registerFormHandling.htm";
 

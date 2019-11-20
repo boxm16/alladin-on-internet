@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Customer Main Page</h1>
+       <a href="${pageContext.request.contextPath}/map.htm">Visit map</a>
+           <a href="${pageContext.request.contextPath}/map2.htm">Visit map2</a>
     </body>
 </html>

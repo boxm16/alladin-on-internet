@@ -19,7 +19,7 @@
     <br>
     <hr>
 
-    <form autocomplete="on" class="login-form" action="${pageContext.request.contextPath}/loginFormHandling.htm" method="POST">
+    <form autocomplete="on" class="login-form" action="${pageContext.request.contextPath}/login.htm" method="POST">
 
         <div class="col-md-4 login-sec">
             <h2 class="text-center">Login Now</h2>
