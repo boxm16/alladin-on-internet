@@ -87,4 +87,11 @@ public class UserController {
 
         return "map2";
     }
+
+    @RequestMapping(value = "/map3", method = RequestMethod.GET)
+
+    public String map23() {
+
+        return "map3";
+    }
 }

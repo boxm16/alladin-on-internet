@@ -35,90 +35,103 @@
             <div class="row">
 
                 <div class="col-lg-8 col-lg-offset-2">
-                    <input type="number" id="lat">
-                    <input type="number" id="alt">
-                    <button onclick="bu()">Click</button>
+                    <input id="address" type="text" style="width:600px;"/><br/>
+                    <input id="submit" type="button" value="Geocode">
+                    <input type="text" id="latitude" placeholder="Latitude"/>
+                    <input type="text" id="longitude" placeholder="Longitude"/>
+                    <div id="map"></div>
                 </div><!-- /.8 -->
 
             </div> <!-- /.row-->
 
         </div> <!-- /.container-->
 
-        <div id="map"></div>
+
+
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCyRVA60P_cw-KswNxngA-CUyYmJM1LLg"></script>
-        <script ">
-                        function bu() {
-                            var lat=document.getElementById("lat").value;
-                            var alt=document.getElementById("alt").value;
-                            
-                            var myLatlng = new google.maps.LatLng(lat, alt);
-                            var mapOptions = {
-                                zoom: 15,
-                                center: myLatlng
-                            }
-                            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-                            var marker = new google.maps.Marker({
-                                position: myLatlng,
-                                title: "Hello World!"
-                            });
-
-// To add the marker to the map, call setMap();
-                            marker.setMap(map);
-                        }
-
-                        $(function () {
-
-                            function initMap() {
-
-                                var location = new google.maps.LatLng(50.0875726, 14.4189987);
-
-                                var mapCanvas = document.getElementById('map');
-                                var mapOptions = {
-                                    center: location,
-                                    zoom: 16,
-                                    panControl: false,
-                                    scrollwheel: true,
-                                    mapTypeId: 'satellite'
-                                }
-                                var map = new google.maps.Map(mapCanvas, mapOptions);
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCyRVA60P_cw-KswNxngA-CUyYmJM1LLg&language=el"></script>
+        <script >
 
 
+            var marker = new google.maps.Marker({
+                draggable: true,
+                animation: google.maps.Animation.DROP
+            });
+            var infowindow = new google.maps.InfoWindow({
+                maxWidth: 400
+            });
 
-                                var marker = new google.maps.Marker({
-                                    position: location,
-                                    map: map,
+            $(function () {
 
-                                });
+                function initMap() {
 
-                                var contentString = '<div class="info-window">' +
-                                        '<h3>Info Window Content</h3>' +
-                                        '<div class="info-content">' +
-                                        '<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>' +
-                                        '</div>' +
-                                        '</div>';
+                    var location = new google.maps.LatLng(37.971526002790604, 23.72656438908689);
 
-                                var infowindow = new google.maps.InfoWindow({
-                                    content: contentString,
-                                    maxWidth: 400
-                                });
+                    var mapCanvas = document.getElementById('map');
 
-                                marker.addListener('click', function () {
+                    var mapOptions = {
+                        center: location,
+                        zoom: 18,
+                        panControl: false,
+                        scrollwheel: true,
+                        mapTypeId: 'satellite'
+                    };
+
+                    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+                    marker.setPosition(location);
+                    marker.setDraggable(true);
+                    marker.setMap(map);
+
+
+                    marker.addListener('click', function () {
+                        infowindow.open(map, marker);
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function () {
+
+                        geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    $('#address').val(results[0].formatted_address);
+                                    $('#latitude').val(marker.getPosition().lat());
+                                    $('#longitude').val(marker.getPosition().lng());
+                                    infowindow.setContent(results[0].formatted_address);
                                     infowindow.open(map, marker);
-                                });
-
-                              //  var styles = [{"featureType": "landscape", "stylers": [{"saturation": -100}, {"lightness": 65}, {"visibility": "on"}]}, {"featureType": "poi", "stylers": [{"saturation": -100}, {"lightness": 51}, {"visibility": "simplified"}]}, {"featureType": "road.highway", "stylers": [{"saturation": -100}, {"visibility": "simplified"}]}, {"featureType": "road.arterial", "stylers": [{"saturation": -100}, {"lightness": 30}, {"visibility": "on"}]}, {"featureType": "road.local", "stylers": [{"saturation": -100}, {"lightness": 40}, {"visibility": "on"}]}, {"featureType": "transit", "stylers": [{"saturation": -100}, {"visibility": "simplified"}]}, {"featureType": "administrative.province", "stylers": [{"visibility": "off"}]}, {"featureType": "water", "elementType": "labels", "stylers": [{"visibility": "on"}, {"lightness": -25}, {"saturation": -100}]}, {"featureType": "water", "elementType": "geometry", "stylers": [{"hue": "#ffff00"}, {"lightness": -25}, {"saturation": -97}]}];
-
-                             //   map.set('styles', styles);
-
-
+                                }
                             }
-
-                            google.maps.event.addDomListener(window, 'load', initMap);
                         });
+                    });
+                    document.getElementById('submit').addEventListener('click', function () {
+                        geocodeAddress(geocoder, map);
+                    });
+                }
+                google.maps.event.addDomListener(window, 'load', initMap);
+                var geocoder = new google.maps.Geocoder();
+
+            });
+
+
+
+            function geocodeAddress(geocoder, resultsMap) {
+                var address = document.getElementById('address').value;
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+
+                        marker.setMap(resultsMap);
+                        marker.setPosition(results[0].geometry.location);
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
         </script>
     </body>
 </html>
