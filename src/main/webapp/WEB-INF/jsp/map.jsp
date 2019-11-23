@@ -39,6 +39,13 @@
                     <input id="submit" type="button" value="Geocode">
                     <input type="text" id="latitude" placeholder="Latitude"/>
                     <input type="text" id="longitude" placeholder="Longitude"/>
+                    <input type="text" id="street" placeholder="Street"/>
+                    <input type="text" id="street_number" placeholder="Street Number"/>
+                    <input type="text" id="district" placeholder="District"/>
+                    <input type="text" id="postal_code" placeholder="Postal Code"/>
+
+
+
                     <div id="map"></div>
                 </div><!-- /.8 -->
 
@@ -95,14 +102,45 @@
                         geocoder.geocode({'latLng': marker.getPosition()}, function (results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (results[0]) {
+                                    var address = results[0].address_components;
+                                    var street = '';
+                                    var street_number = '';
+                                    var district = '';
+                                    var postal_code = '';
+                                    for (var i = 0; i < address.length; i++) {
+                                        if (address[i].types.includes("route")) {
+                                            street = address[i].long_name;
+                                        }
+
+                                        if (address[i].types.includes("street_number")) {
+                                            street_number = address[i].long_name;
+                                        }
+
+                                        if (address[i].types.includes("locality") |
+                                                address[i].types.includes("administrative_area_level_4")|
+                                                address[i].types.includes("administrative_area_level_5")) {
+                                            district = address[i].long_name;
+                                        }
+                                        if (address[i].types.includes("postal_code")) {
+                                            postal_code = address[i].long_name;
+                                        }
+                                    }
+
                                     $('#address').val(results[0].formatted_address);
                                     $('#latitude').val(marker.getPosition().lat());
                                     $('#longitude').val(marker.getPosition().lng());
+                                    $('#street').val(street);
+                                    $('#street_number').val(street_number);
+                                    $('#district').val(district);
+                                    $('#postal_code').val(postal_code);
                                     infowindow.setContent(results[0].formatted_address);
                                     infowindow.open(map, marker);
                                 }
+                            }else{
+                                alert("Out of range")
                             }
-                        });
+                        }
+                        );
                     });
                     document.getElementById('submit').addEventListener('click', function () {
                         geocodeAddress(geocoder, map);
