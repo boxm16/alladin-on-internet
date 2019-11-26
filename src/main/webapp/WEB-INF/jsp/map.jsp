@@ -35,10 +35,14 @@
             <div class="row">
 
                 <div class="col-lg-8 col-lg-offset-2">
+                    <p><h1>Find your address</h1></p>
                     <input id="address" type="text" style="width:600px;"/><br/>
-                    <input id="submit" type="button" value="Geocode">
+
+                    <input id="submit"  type="button" value="Geocode">
+                    <br>
                     <input type="text" id="latitude" placeholder="Latitude"/>
                     <input type="text" id="longitude" placeholder="Longitude"/>
+                    <br>
                     <input type="text" id="street" placeholder="Street"/>
                     <input type="text" id="street_number" placeholder="Street Number"/>
                     <input type="text" id="district" placeholder="District"/>
@@ -117,7 +121,7 @@
                                         }
 
                                         if (address[i].types.includes("locality") |
-                                                address[i].types.includes("administrative_area_level_4")|
+                                                address[i].types.includes("administrative_area_level_4") |
                                                 address[i].types.includes("administrative_area_level_5")) {
                                             district = address[i].long_name;
                                         }
@@ -136,8 +140,8 @@
                                     infowindow.setContent(results[0].formatted_address);
                                     infowindow.open(map, marker);
                                 }
-                            }else{
-                                alert("Out of range")
+                            } else {
+                                alert("Out of range");
                             }
                         }
                         );
