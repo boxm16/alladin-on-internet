@@ -31,37 +31,46 @@
     <body>
 
         <div class="container">
+            <h1><center>Your contact information</center></h1>
 
+            Landline Phone  <input type="text" id="landline_phone" placeholder="Type your landline phone number"/>
+
+            Mobile Phone <input type="text" id="mobile_phone" placeholder="Type your mobile phone number"/>
+            <hr>
             <div class="row">
-
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h1>Find your address</h1>
+                <div class="col-sm-8 ">
                     <h6><i>Type your address to find on map</i></h6>
-                    <input id="address" type="text" style="width:600px;"/><br/>
-                    <input id="submit"  type="button" value="Geocode">
+                    <br>
+                    <input id="address" type="text" style="width:600px;"/>
+                    <br><br>
+                    <input id="submit"  type="button" value="Click to find your address on the map">
 
                     <h6><i>Drag the marker on the map to pin your address</i></h6>
                     <div id="map"></div>
+                    <input type="text" id="latitude" placeholder="Latitude" readonly="redonly"/>
+                    <input type="text" id="longitude" placeholder="Longitude" readonly="redonly"/>
+
+                </div>
+
+                <div class="col-sm-4 ">
 
 
                     <h3>Street</h3>
-                    <input type="text" id="street" placeholder="Street"/>
+                    <input type="text" id="street" placeholder="Type your street name"/>
                     <h3>Street Number</h3>
-                    <input type="text" id="street_number" placeholder="Street Number"/>
+                    <input type="text" id="street_number" placeholder="Type your street number"/>
                     <h3>District</h3>
-                    <input type="text" id="district" placeholder="District"/>
+                    <input type="text" id="district" placeholder="Type your district name"/>
                     <h3>Postal Code</h3>
-                    <input type="text" id="postal_code" placeholder="Postal Code"/>
-                   <h3>Floor</h3>
-                    <input type="text" id="floor" placeholder="Floor"/>
+                    <input type="text" id="postal_code" placeholder="Type your postal code"/>
+                    <h3>Floor</h3>
+                    <input type="text" id="floor" placeholder="Type your floor number"/>
                     <h3>Name on Bell</h3>
-                    <input type="text" id="bell_name" placeholder="Name on Bell"/>
-                    
+                    <input type="text" id="bell_name" placeholder="Type your door bell name"/>
+
                     <hr>
-                    <button>CONFIRM YOUR ADDRESS</button>     <br><br>
-                    <input type="text" id="latitude" placeholder="Latitude"/>
-                    <input type="text" id="longitude" placeholder="Longitude"/>
-                    <br>
+                    <button>CONFIRM YOUR CONTACT INFORMATION</button>     <br><br>
+
                     <hr>
                 </div><!-- /.8 -->
 

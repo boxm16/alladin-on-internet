@@ -1,30 +1,41 @@
-<html>
-    <head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
-        type="text/javascript" charset="utf-8"></script>
-        <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
-        type="text/javascript" charset="utf-8"></script>
-    </head>
-    <body>
-        <div style="width: 640px; height: 480px" id="mapContainer"></div>
-        <script>
-            // Initialize the platform object:
-            var platform = new H.service.Platform({
-                'apikey': '{ttkJDLqXsN8-WTYtLvTbz46MSp6oTqKvYca57r13R2c}'
-            });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-            // Obtain the default map types from the platform object
-            var maptypes = platform.createDefaultLayers();
+<div class="container-fluid">
+  <h1>Hello World!</h1>
+  <p>Resize the browser window to see the effect.</p>
+  <p>The columns will automatically stack on top of each other when the screen is less than 768px wide.</p>
+  <div class="row">
+    <div class="col-sm-3" style="background-color:blue;">.col-sm-3</div>
 
-            // Instantiate (and display) a map object:
-            var map = new H.Map(
-                    document.getElementById('mapContainer'),
-                    maptypes.vector.normal.map,
-                    {
-                        zoom: 10,
-                        center: {lng: 13.4, lat: 52.51}
-                    });
-        </script>
-    </body>
+    <div class="col-sm-9" style="background-color:lavender;">
+        .col-sm-9
+        <div id="map"></div>            
+    </div>
+  </div>
+</div>
+
+</body>
 </html>
