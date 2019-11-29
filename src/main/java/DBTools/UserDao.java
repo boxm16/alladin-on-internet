@@ -9,6 +9,7 @@ import Models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -49,5 +50,13 @@ public class UserDao {
         String delete_token_query = "DELETE FROM  verification_token WHERE token=?";
         jdbcTemplate.update(confirmation_query, email);
         jdbcTemplate.update(delete_token_query, token);
+    }
+
+    public boolean validPassword(User user) {
+
+        String query = "SELECT password FROM user WHERE email=?";
+        String stored_hash = jdbcTemplate.queryForObject(query, new Object[]{user.getEmail()}, String.class);
+        return BCrypt.checkpw(user.getPassword(), stored_hash);
+
     }
 }

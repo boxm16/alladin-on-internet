@@ -14,10 +14,10 @@ import org.springframework.validation.Validator;
 
 /**
  *
- * @author Michail Sitmalidis
+ * @author boxm1
  */
 @Component
-public class UserValidator implements Validator {
+public class LoginValidator implements Validator {
 
     @Autowired
     private UserDao userDao;
@@ -31,13 +31,12 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
         String email = user.getEmail().trim();
-
-        if (userDao.userExists(email)) {
-            errors.rejectValue("email", "email.alreadyExists");
-        }
-
-        if (!user.getPassword().equals(user.getPassword_confirmation())) {
-            errors.rejectValue("password_confirmation", "password.dontMatch");
+        if (!userDao.userExists(email)) {
+            errors.rejectValue("email", "email.notExists");
+        } else {
+            if (!userDao.validPassword(user)) {
+                errors.rejectValue("password", "password.wrongPassword");
+            }
         }
     }
 

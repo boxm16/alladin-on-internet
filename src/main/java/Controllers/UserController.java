@@ -10,7 +10,7 @@ import DBTools.UserDao;
 import Models.User;
 import Service.Mail;
 import Service.TokenFactory;
-import Validation.UserValidator;
+import Validation.RegistrationValidator;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,24 +37,16 @@ public class UserController {
     private AddressDao addressDao;
 
     @Autowired
-    private UserValidator userValidator;
+    private RegistrationValidator userValidator;
 
     @Autowired
     private Mail mail;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/data", method = RequestMethod.GET)
 
-    public String customerMainPage(HttpSession session) {
-        User user = new User();
-        session.setAttribute("user", user);
-        return "customerMainPage";
-    }
+    public String data() {
 
-    @RequestMapping(value = "/map", method = RequestMethod.GET)
-
-    public String map() {
-
-        return "map";
+        return "data";
     }
 
     @RequestMapping(value = "/map3", method = RequestMethod.GET)
@@ -64,5 +56,4 @@ public class UserController {
         return "map3";
     }
 
-   
 }

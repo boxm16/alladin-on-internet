@@ -9,10 +9,12 @@ import DBTools.UserDao;
 import Models.User;
 import Service.Mail;
 import Service.TokenFactory;
-import Validation.UserValidator;
+import Validation.LoginValidator;
+import Validation.RegistrationValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -26,19 +28,31 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Michail Sitmalidis
  */
 @Controller
-public class RegistrationController {
+public class AccountController {
 
     @Autowired
     private UserDao userDao;
 
     @Autowired
-    private UserValidator userValidator;
+    private RegistrationValidator registrationValidator;
 
     @Autowired
     private Mail mail;
 
     @Autowired
     private TokenFactory tokenFactory;
+
+    @Autowired
+    private LoginValidator loginValidator;
+
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String login(ModelMap model) {
+        User user = new User();
+        model.addAttribute(user);
+
+        return "index";
+
+    }
 
     @RequestMapping(value = "/registrationForm", method = RequestMethod.GET)
     public String registrationForm(ModelMap model) {
@@ -48,12 +62,13 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registerFormHandling(@ModelAttribute User user, BindingResult bindingResult, ModelMap model, HttpSession session, HttpServletRequest request) {
-        userValidator.validate(user, bindingResult);
+    public String registration(@ModelAttribute User user, BindingResult bindingResult, ModelMap model, HttpSession session, HttpServletRequest request) {
+        registrationValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         } else {
             String token = tokenFactory.createToken();
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userDao.registerUser(user, token);
             String URL_Path = request.getScheme()
                     + "://" + request.getServerName()
@@ -73,12 +88,10 @@ public class RegistrationController {
 
     @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
     public String confirmRegistration(@RequestParam("email") String email, @RequestParam("token") String token, ModelMap model) {
-        System.out.println(token);
 
         if (userDao.registrationPending(email, token)) {
-            System.out.println("pending");
             userDao.confirmRegistration(email, token);
-            return "mainPage";
+            return "data";
         } else {
             if (userDao.userExists(email)) {
                 String messageHead = "OOPS, something went wrong";
@@ -92,6 +105,22 @@ public class RegistrationController {
                 model.addAttribute("messageBody", messageBody);
             }
             return "message";
+        }
+
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(HttpSession session, @ModelAttribute User user, ModelMap model, BindingResult bindingResult) {
+
+        loginValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "index";
+        } else {
+            session.setAttribute("user", user);
+            user.setPassword("");
+            return "mainPage";
+
         }
 
     }
