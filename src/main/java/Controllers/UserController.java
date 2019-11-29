@@ -64,6 +64,7 @@ public class UserController {
             String token = TokenFactory.createToken();
             userDao.registerUser(user, token);
             String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();;
+          
             mail.confirmationMail(path, user.getEmail());
             return "customerMainPage";
         }
@@ -88,6 +89,13 @@ public class UserController {
 
     public String map23() {
 
+        return "map3";
+    }
+    
+     @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
+
+    public String confirmRegistration() {
+         System.out.println("confirmRegistration-done");
         return "map3";
     }
 }

@@ -52,7 +52,7 @@ public class Mail {
             
             message.setSubject("Registration Confirmation");
             message.setText("Dear Mail Crawler,"
-                    + "\n\n Click the link to confirm your registration:" + path + "/confirmRegistration?token=" + token);
+                    + "\n\n Click the link to confirm your registration:" + path + "/confirmRegistration.htm?token=" + token);
 
             Transport.send(message);
 

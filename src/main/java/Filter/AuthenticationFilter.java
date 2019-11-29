@@ -43,16 +43,18 @@ public class AuthenticationFilter implements Filter {
         String logingURI = request.getContextPath() + "/login.htm";
         String registerURI = request.getContextPath() + "/goToRegisterForm.htm";
         String registerFormHandlingURI = request.getContextPath() + "/registerFormHandling.htm";
+        String confirmRegistrationURI = request.getContextPath() + "/confirmRegistration.htm";
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
         boolean logingRequest = request.getRequestURI().equals(logingURI);
         boolean loginRequest = request.getRequestURI().equals(loginURI);
         boolean registerRequest = request.getRequestURI().equals(registerURI);
         boolean registerFormHandlingRequest = request.getRequestURI().equals(registerFormHandlingURI);
+        boolean confirmRegistrationRequest = request.getRequestURI().equals(confirmRegistrationURI);
 
         System.out.println(new Date() + " URI:" + request.getRequestURI());
 
-        if (loggedIn || loginRequest || logingRequest || registerRequest || registerFormHandlingRequest) {
+        if (loggedIn || loginRequest || logingRequest || registerRequest || registerFormHandlingRequest||confirmRegistrationRequest) {
             chain.doFilter(request, response);
         } else {
             response.sendRedirect(loginURI);
