@@ -37,8 +37,8 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
-    
-     @Autowired
+
+    @Autowired
     private Mail mail;
 
     @RequestMapping(value = "/go", method = RequestMethod.GET)
@@ -63,8 +63,8 @@ public class UserController {
         } else {
             String token = TokenFactory.createToken();
             userDao.registerUser(user, token);
-        
-            mail.confirmationMail(request.getHeader("host"), user.getEmail());
+            String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();;
+            mail.confirmationMail(path, user.getEmail());
             return "customerMainPage";
         }
     }
