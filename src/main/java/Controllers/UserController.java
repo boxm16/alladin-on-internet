@@ -8,8 +8,11 @@ package Controllers;
 import DBTools.AddressDao;
 import DBTools.UserDao;
 import Models.User;
+import Service.Mail;
+import Service.TokenFactory;
 import Validation.UserValidator;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+     @Autowired
+    private Mail mail;
 
     @RequestMapping(value = "/go", method = RequestMethod.GET)
 
@@ -50,19 +56,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registerFormHandling", method = RequestMethod.POST)
-    public String registerFormHandling(@ModelAttribute User user, BindingResult bindingResult, ModelMap model, HttpSession session) {
+    public String registerFormHandling(@ModelAttribute User user, BindingResult bindingResult, ModelMap model, HttpSession session, HttpServletRequest request) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
-
-            userDao.registerUser(user);
-            ArrayList<String> districts = addressDao.getDistricts();
-
-            model.addAttribute("districts", districts);
-            model.addAttribute("user", user);
-            session.setAttribute("user", user);
-            return "userData";
+            String token = TokenFactory.createToken();
+            userDao.registerUser(user, token);
+        
+            mail.confirmationMail(request.getHeader("host"), user.getEmail());
+            return "customerMainPage";
         }
     }
 
@@ -79,13 +82,6 @@ public class UserController {
     public String map() {
 
         return "map";
-    }
-
-    @RequestMapping(value = "/map2", method = RequestMethod.GET)
-
-    public String map2() {
-
-        return "map2";
     }
 
     @RequestMapping(value = "/map3", method = RequestMethod.GET)

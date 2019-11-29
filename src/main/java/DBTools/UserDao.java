@@ -26,7 +26,6 @@ public class UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
     public boolean userExists(String email) {
         String sql = "SELECT count(*) FROM user WHERE email = ?";
 
@@ -35,9 +34,11 @@ public class UserDao {
 
     }
 
-    public void registerUser(User user) {
-        String sql = "INSERT INTO user(email, password) VALUES(?,?)";
-        jdbcTemplate.update(sql, user.getEmail(),user.getPassword());
+    public void registerUser(User user, String token) {
+        String user_query = "INSERT INTO user (email, password, status) VALUES(?,?,?)";
+        String token_query = "INSERT INTO verification_token (email, token) VALUES(?,?)";
+        jdbcTemplate.update(user_query, user.getEmail(), user.getPassword(), "pending");
+        jdbcTemplate.update(token_query, user.getEmail(), token);
     }
 
 }
