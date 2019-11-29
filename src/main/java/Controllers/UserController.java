@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -40,35 +41,6 @@ public class UserController {
 
     @Autowired
     private Mail mail;
-
-    @RequestMapping(value = "/go", method = RequestMethod.GET)
-
-    public String saveCustomerRating() {
-
-        return "register";
-    }
-
-    @RequestMapping(value = "/goToRegisterForm", method = RequestMethod.GET)
-    public String registerUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "register";
-    }
-
-    @RequestMapping(value = "/registerFormHandling", method = RequestMethod.POST)
-    public String registerFormHandling(@ModelAttribute User user, BindingResult bindingResult, ModelMap model, HttpSession session, HttpServletRequest request) {
-        userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "register";
-        } else {
-            String token = TokenFactory.createToken();
-            userDao.registerUser(user, token);
-            String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();;
-          
-            mail.confirmationMail(path, user.getEmail());
-            return "customerMainPage";
-        }
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
 
@@ -91,11 +63,6 @@ public class UserController {
 
         return "map3";
     }
-    
-     @RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
 
-    public String confirmRegistration() {
-         System.out.println("confirmRegistration-done");
-        return "map3";
-    }
+   
 }

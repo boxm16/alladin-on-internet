@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenFactory {
 
-    public static String createToken() {
+    public String createToken() {
         String token = UUID.randomUUID().toString();
         return token;
     }

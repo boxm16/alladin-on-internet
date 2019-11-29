@@ -51,14 +51,11 @@ public class Mail {
             String token = UUID.randomUUID().toString();
             
             message.setSubject("Registration Confirmation");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Click the link to confirm your registration:" + path + "/confirmRegistration.htm?token=" + token);
+            message.setText("Dear Customer,"
+                    + "\n\n Click the link to confirm your registration:" + path);
 
             Transport.send(message);
-
-            System.out.println("Done");
-
-        } catch (MessagingException e) {
+    } catch (MessagingException e) {
             e.printStackTrace();
         }
 

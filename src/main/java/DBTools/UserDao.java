@@ -6,12 +6,7 @@
 package DBTools;
 
 import Models.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -41,4 +36,18 @@ public class UserDao {
         jdbcTemplate.update(token_query, user.getEmail(), token);
     }
 
+    public boolean registrationPending(String email, String token) {
+        String sql = "SELECT count(*) FROM verification_token WHERE email = ? and token=?";
+
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{email, token}, Integer.class);
+        return count > 0;
+    }
+
+    public void confirmRegistration(String email, String token) {
+
+        String confirmation_query = "UPDATE user SET status='active' where email=?";
+        String delete_token_query = "DELETE FROM  verification_token WHERE token=?";
+        jdbcTemplate.update(confirmation_query, email);
+        jdbcTemplate.update(delete_token_query, token);
+    }
 }

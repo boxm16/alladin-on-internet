@@ -19,9 +19,9 @@
                 <div class="row">
 
 
-                    <spring:form modelAttribute="user" cssClass="login-form" action="${pageContext.request.contextPath}/registerFormHandling.htm" method="POST">  
+                    <spring:form modelAttribute="user" cssClass="login-form" action="${pageContext.request.contextPath}/registration.htm" method="POST">  
                         <div class="col-md-4 login-sec">
-                            <h2 class="text-center">ΦΤΙΑΞΕ ΛΟΓΑΡΙΑΣΜΟ</h2>
+                            <h2 class="text-center">CREATE ACCOUNT</h2>
                             <div class="form-group">
                                 <spring:label path="email" cssClass="text-uppercase">e-mail</spring:label>
                                 <spring:input type="email" cssClass="form-control" path="email"/> 

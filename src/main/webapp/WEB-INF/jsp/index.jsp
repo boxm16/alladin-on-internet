@@ -40,7 +40,7 @@
             <div>
                 <p class="change_link">
                     Δεν έχεις λογαριασμό ?
-                    <a href="${pageContext.request.contextPath}/goToRegisterForm.htm">Φτιάξε το</a>
+                    <a href="${pageContext.request.contextPath}/registrationForm.htm">Φτιάξε το</a>
                 </p>
             </div>
         </div>
