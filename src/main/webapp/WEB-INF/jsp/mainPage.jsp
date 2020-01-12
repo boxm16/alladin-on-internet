@@ -12,8 +12,7 @@
         <title>Customer Main Page</title>
     </head>
     <body>
-        <h1>Customer Main Page</h1>
-        <p>dsdasdasdasdasdasdasdasdasd</p>
+        <h1>Customer 555555 Page</h1>
         <a href="${pageContext.request.contextPath}/data.htm">Visit map</a>
         <a href="${pageContext.request.contextPath}/map2.htm">Visit map2</a>
         <a href="${pageContext.request.contextPath}/map3.htm">Visit map2</a>
