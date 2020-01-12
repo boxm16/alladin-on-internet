@@ -31,6 +31,10 @@ public class EmailController {
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
+        prop.put("mail.protocol", "true");
+        prop.put("mail.debug", "true");
+        prop.put("mail.smpt.auth", "true");
+
         prop.put("mail.smtp.starttls.enable", "true"); //TLS
 
         Session session = Session.getInstance(prop,
