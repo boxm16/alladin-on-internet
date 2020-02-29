@@ -11,34 +11,44 @@ package Models;
  */
 public class User {
 
-    private String email;
+    private int id;
+
+    private String emailIdentifier;
+    private String password;
+
+    private String passwordConfirmation;
+    private String status;
+
     private String firstName;
     private String lastName;
-    private String password;
-    private String password_confirmation;
-
     private String landlinePhone;
     private String mobilePhone;
 
-    private String district;
     private String street;
-    private String streetNumber;
-
+    private String district;
     private String floor;
     private String postalCode;
-    private String bellName;
+    private String doorbellName;
+
+    private String latitude;
+    private String longitude;
+
     private String note;
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setEmailIdentifier(String emailIdentifier) {
+        this.emailIdentifier = emailIdentifier;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setFirstName(String firstName) {
@@ -49,24 +59,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPassword_confirmation(String password_confirmation) {
-        this.password_confirmation = password_confirmation;
-    }
-
     public void setLandlinePhone(String landlinePhone) {
         this.landlinePhone = landlinePhone;
     }
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public void setStreet(String street) {
@@ -85,12 +83,36 @@ public class User {
         this.postalCode = postalCode;
     }
 
-    public void setBellName(String bellName) {
-        this.bellName = bellName;
+    public void setDoorbellName(String doorbellName) {
+        this.doorbellName = doorbellName;
     }
 
-    public String getEmail() {
-        return email;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEmailIdentifier() {
+        return emailIdentifier;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getFirstName() {
@@ -101,24 +123,12 @@ public class User {
         return lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPassword_confirmation() {
-        return password_confirmation;
-    }
-
     public String getLandlinePhone() {
         return landlinePhone;
     }
 
     public String getMobilePhone() {
         return mobilePhone;
-    }
-
-    public String getNote() {
-        return note;
     }
 
     public String getStreet() {
@@ -137,8 +147,28 @@ public class User {
         return postalCode;
     }
 
-    public String getBellName() {
-        return bellName;
+    public String getDoorbellName() {
+        return doorbellName;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
     }
 
 }

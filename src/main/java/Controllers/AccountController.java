@@ -7,7 +7,7 @@ package Controllers;
 
 import DBTools.UserDao;
 import Models.User;
-import Service.Mail;
+
 import Service.TokenFactory;
 import Validation.LoginValidator;
 import Validation.RegistrationValidator;
@@ -37,16 +37,13 @@ public class AccountController {
     private RegistrationValidator registrationValidator;
 
     @Autowired
-    private Mail mail;
-
-    @Autowired
     private TokenFactory tokenFactory;
 
     @Autowired
     private LoginValidator loginValidator;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String login(ModelMap model) {
+    public String index(ModelMap model) {
         User user = new User();
         model.addAttribute(user);
 
@@ -69,16 +66,14 @@ public class AccountController {
         } else {
             String token = tokenFactory.createToken();
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-            userDao.registerUser(user, token);
             String URL_Path = request.getScheme()
                     + "://" + request.getServerName()
                     + ":" + request.getServerPort()
-                    + "/confirmRegistration.htm?email=" + user.getEmail()
-                    + "&token=" + token;
+                    + request.getContextPath() + "/confirmRegistration.htm?email=" + user.getEmailIdentifier() + "&token=" + token;
+            userDao.registerUser(user, token, URL_Path);
 
-            mail.confirmationMail(URL_Path, user.getEmail());
-            String messageHead = "Congratulations, your registration was successful";
-            String messageBody = "An e-mail has been sent to your e-mail address, with instruction on what you will need to do next.";
+            String messageHead = "Hi New Customer";
+            String messageBody = "An e-mail will be sent to your e-mail address, with instruction on what you will need to do next. It may take some time. ";
             model.addAttribute("messageHead", messageHead);
             model.addAttribute("messageBody", messageBody);
             return "message";
@@ -90,19 +85,22 @@ public class AccountController {
     public String confirmRegistration(@RequestParam("email") String email, @RequestParam("token") String token, ModelMap model) {
 
         if (userDao.registrationPending(email, token)) {
-            userDao.confirmRegistration(email, token);
-            return "data";
+            userDao.confirmRegistration(email);
+            return "redirect:/CustomerMainPage";
         } else {
             if (userDao.userExists(email)) {
-                String messageHead = "OOPS, something went wrong";
-                String messageBody = "It seems you have already confirmed your registration, try to log in.";
-                model.addAttribute("messageHead", messageHead);
-                model.addAttribute("messageBody", messageBody);
-            } else {
-                String messageHead = "OOPS, something went wrong";
-                String messageBody = "Something went wrong with your registration, please try again.";
-                model.addAttribute("messageHead", messageHead);
-                model.addAttribute("messageBody", messageBody);
+                User user = userDao.getUser(email);
+                if (user.getStatus().equals("activated")) {
+                    String messageHead = "OOPS, something went wrong";
+                    String messageBody = "It seems you have already confirmed your registration, just log in.";
+                    model.addAttribute("messageHead", messageHead);
+                    model.addAttribute("messageBody", messageBody);
+                } else {
+                    String messageHead = "OOPS, something went wrong";
+                    String messageBody = "Something went wrong with your registration, please try again.";
+                    model.addAttribute("messageHead", messageHead);
+                    model.addAttribute("messageBody", messageBody);
+                }
             }
             return "message";
         }
@@ -110,18 +108,49 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpSession session, @ModelAttribute User user, ModelMap model, BindingResult bindingResult) {
+    public String login(HttpSession session, @ModelAttribute User loggingUser, ModelMap model, BindingResult bindingResult) {
 
-        loginValidator.validate(user, bindingResult);
+        loginValidator.validate(loggingUser, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "index";
         } else {
+            User user = userDao.getUser(loggingUser.getEmailIdentifier());
             session.setAttribute("user", user);
             user.setPassword("");
-            return "mainPage";
+            return "redirect:/customerMainPage.htm";
 
         }
 
     }
+
+    @RequestMapping(value = "/customerMainPage", method = RequestMethod.GET)
+    public String customerMainPage(HttpSession session, ModelMap model) {
+        User user = (User) session.getAttribute("user");
+        int id = user.getId();
+        User newUser = userDao.getUser(id);
+        session.setAttribute("user", newUser);
+        model.addAttribute("user", newUser);
+        return "customerMainPage";
+
+    }
+
+    @RequestMapping(value = "/address", method = RequestMethod.GET)
+    public String address(HttpSession session, @ModelAttribute User user, ModelMap model) {
+
+        model.addAttribute("user", session.getAttribute("user"));
+        return "address";
+
+    }
+
+    @RequestMapping(value = "/saveAddress", method = RequestMethod.POST)
+    public String saveAddress(HttpSession session, @ModelAttribute User user, ModelMap model) {
+        
+        String postalCode=user.getPostalCode().replaceAll("\\s","");//removing white spaces
+        user.setPostalCode(postalCode);
+        userDao.updateUser(user);
+        return "redirect:/customerMainPage.htm";
+
+    }
+
 }

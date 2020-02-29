@@ -30,13 +30,13 @@ public class RegistrationValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;
-        String email = user.getEmail().trim();
+        String email = user.getEmailIdentifier().trim();
 
         if (userDao.userExists(email)) {
             errors.rejectValue("email", "email.alreadyExists");
         }
 
-        if (!user.getPassword().equals(user.getPassword_confirmation())) {
+        if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             errors.rejectValue("password_confirmation", "password.dontMatch");
         }
     }

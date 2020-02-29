@@ -23,9 +23,9 @@
                         <div class="col-md-4 login-sec">
                             <h2 class="text-center">Login</h2>
                             <div class="form-group">
-                                <spring:label path="email" cssClass="text-uppercase">e-mail</spring:label>
-                                <spring:input type="email" cssClass="form-control" path="email"/> 
-                                <spring:errors path="email" cssClass="error error-message"/>
+                                <spring:label path="emailIdentifier" cssClass="text-uppercase">e-mail</spring:label>
+                                <spring:input type="emailIdentifier" cssClass="form-control" path="emailIdentifier"/> 
+                                <spring:errors path="emailIdentifier" cssClass="error error-message"/>
 
                             </div>  
 
